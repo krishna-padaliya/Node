@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO</title>
+    <style>
+        #app {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#todo-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#todo-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.todo-remove {
+  cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>To-Do App</h1>
+        <form id="todo-form">
+          <input type="text" id="todo-input" placeholder="Add a new task..." />
+          <button type="submit" id="todo-add-btn">Add Todo</button>
+        </form>
+        <ul id="todo-list"></ul>
+      </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("todo-form");
+  const input = document.getElementById("todo-input");
+  const list = document.getElementById("todo-list");
+
+  let data = [];
+
+  const createPost = (text) => {
+    const li = document.createElement("li");
+    li.classList.add("todo-item");
+    li.innerHTML = `
+      <span>${text}</span>
+      <i class="fas fa-trash-alt todo-remove"></i>
+    `;
+    list.appendChild(li);
+  };
+
+  const deletePost = (e) => {
+    const item = e.target.parentElement;
+    item.remove();
+  };
+
+  const acceptData = () => {
+    if (input.value === "") {
+      return;
+    }
+
+    data.push({ text: input.value });
+    createPost(input.value);
+    input.value = "";
+  };
+
+  const editPost = (e) => {
+    // Implement edit functionality here
+  };
+
+  const formValidation = (e) => {
+    e.preventDefault();
+    if (input.value === "") {
+      console.log("failure");
+    } else {
+      console.log("success");
+      acceptData();
+    }
+  };
+
+  form.addEventListener("submit", formValidation);
+  list.addEventListener("click", (e) => {
+    if (e.target.classList.contains("todo-remove")) {
+      deletePost(e);
+    }
+  });
+});
+</script>
