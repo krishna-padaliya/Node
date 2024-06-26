@@ -31,6 +31,29 @@ app.get('/deleteData/:id',(req,res)=>{
     })
 })
 
+app.get('/editData/:id',(req,res)=>{
+    let id = req.params.id
+    adminTable.findById(id)
+    .then((single)=>{
+        return res.render('edit',{
+        single
+        })
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+app.post('/updateData',(req,res)=>{
+    let id = req.body.editid
+    adminTable.findByIdAndUpdate(id,{
+        username:req.body.username,
+        password:req.body.password
+    }).then((success)=>{
+        return res.redirect("/")
+    })
+})
+
+
 app.post('/insertData',(req,res)=>{
     const {username,password} = req.body
 
